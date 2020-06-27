@@ -1,6 +1,6 @@
 const { readdir, writeFile, lstat } = require('fs').promises
 
-export default async () => {
+module.exports = async () => {
   const srcPath = './src'
   const files = await readdir(srcPath)
   const filesStats = await Promise.all(
