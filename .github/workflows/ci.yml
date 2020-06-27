@@ -1,0 +1,26 @@
+name: CI Build Android
+on:
+  push:
+    branches:
+      - master
+jobs:
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check working directory
+        run: ls
+      - name: Install dependencies
+        run: yarn install
+      - name: Run task runner
+        run: node __taskrunner__/index.js
+      - name: Make gradlew executable
+        run: cd android && chmod +x ./gradlew
+      - name: Build Android Release
+        run: cd android && ./gradlew assembleRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: DiagnosisLupus.apk
+          path: android/app/build/outputs/apk/release/
