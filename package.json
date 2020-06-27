@@ -1,0 +1,49 @@
+{
+  "name": "lupus-diagnosis--frontend",
+  "version": "0.0.1",
+  "description": "Aplikasi untuk Mendiagnosa Penyakit Lupus menggunakan Metode Naive Bayes.",
+  "author": "Sutan Nasution <sutan.gnst@gmail.com>.",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prestart": "node __taskrunner__/index.js",
+    "generate:source": "node __taskrunner__/index.js"
+  },
+  "dependencies": {
+    "react": "16.11.0",
+    "react-native": "0.62.2"
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/runtime": "7.9.2",
+    "@react-native-community/eslint-config": "1.0.0",
+    "@types/jest": "24.9.1",
+    "@types/react-native": "0.62.2",
+    "@types/react-test-renderer": "16.9.2",
+    "@typescript-eslint/eslint-plugin": "2.27.0",
+    "@typescript-eslint/parser": "2.27.0",
+    "babel-jest": "24.9.0",
+    "eslint": "6.8.0",
+    "jest": "24.9.0",
+    "metro-react-native-babel-preset": "0.58.0",
+    "prettier": "2.0.4",
+    "react-native-typescript-transformer": "1.2.13",
+    "react-test-renderer": "16.11.0",
+    "typescript": "3.8.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
