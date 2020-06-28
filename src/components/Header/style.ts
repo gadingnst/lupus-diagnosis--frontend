@@ -6,7 +6,9 @@ export default StyleSheet.create({
     width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    color: Theme.text,
     backgroundColor: Theme.primary
+  },
+  title: {
+    color: Theme.white
   }
 })

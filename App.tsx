@@ -1,10 +1,3 @@
-import { PureComponent } from 'react'
-import Source from './src'
+import Main from './src'
 
-class App extends PureComponent {
-  public render() {
-    return <Source />
-  }
-}
-
-export default App
+export default () => <Main />

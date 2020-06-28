@@ -2,11 +2,16 @@ import { PureComponent } from 'react'
 import { View, Text } from 'react-native'
 import Styles from './style'
 
-class Header extends PureComponent {
+interface Props {
+  title: string
+}
+
+class Header extends PureComponent<Props> {
   public render() {
+    const { title } = this.props
     return (
       <View style={Styles.header}>
-        <Text>Header Component</Text>
+        <Text style={Styles.title}>{title}</Text>
       </View>
     )
   }

@@ -1,14 +1,11 @@
+import 'react-native-gesture-handler'
 import { PureComponent } from 'react'
-import { View, Text } from 'react-native'
-import { Header } from 'components'
+import Navigator from 'navigator'
 
-export default class extends PureComponent {
+class Main extends PureComponent {
   public render() {
-    return (
-      <View>
-        <Header />
-        <Text>Hello World</Text>
-      </View>
-    )
+    return <Navigator />
   }
 }
+
+export default Main
