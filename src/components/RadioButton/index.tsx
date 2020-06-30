@@ -1,29 +1,48 @@
 import { PureComponent } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle
+} from 'react-native'
 import { Theme } from 'configs'
-import Style from './style'
+import style from './style'
 
 interface Props {
   selected: boolean
   color: string
+  text: string
+  style: StyleProp<ViewStyle>
   onPress: (selected: boolean) => void
 }
 
 class RadioButton extends PureComponent<Props> {
-  public static defaultProps: Partial<Props> = {
+  static defaultProps: Partial<Props> = {
     selected: false,
     color: Theme.primary,
+    text: '',
+    style: {},
     onPress: () => {}
   }
 
-  public render() {
-    const { onPress, selected, color: backgroundColor } = this.props
+  render() {
+    const {
+      onPress,
+      selected,
+      text,
+      style: styleProp,
+      color: backgroundColor
+    } = this.props
     return (
       <TouchableOpacity
-        style={Style.container}
+        style={[style.container, styleProp]}
         onPress={() => onPress(selected)}
       >
-        {selected && <View style={[Style.radio, { backgroundColor }]} />}
+        <View style={style.radio}>
+          {selected && <View style={[style.checked, { backgroundColor }]} />}
+        </View>
+        <Text style={style.text}>{text}</Text>
       </TouchableOpacity>
     )
   }
