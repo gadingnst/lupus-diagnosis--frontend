@@ -4,13 +4,10 @@ module.exports = async () => {
   const srcPath = './src'
   const files = await readdir(srcPath)
   const filesStats = await Promise.all(
-    files.map(async (file) => {
-      const stats = await lstat(`${srcPath}/${file}`)
-      return {
-        name: file,
-        isDir: stats.isDirectory()
-      }
-    })
+    files.map(async (name) => ({
+      name,
+      isDir: (await lstat(`${srcPath}/${name}`)).isDirectory()
+    }))
   )
 
   const dirs = filesStats.reduce((acc, cur) => {
@@ -19,8 +16,8 @@ module.exports = async () => {
   }, [])
 
   await Promise.all(
-    dirs.map((dir) =>
-      writeFile(`${srcPath}/${dir}/package.json`, JSON.stringify({ name: dir }))
+    dirs.map((name) =>
+      writeFile(`${srcPath}/${name}/package.json`, JSON.stringify({ name }))
     )
   )
 }

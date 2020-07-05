@@ -8,11 +8,11 @@ interface Props {
 }
 
 class Loader extends PureComponent<Props> {
-  static defaultProps: Partial<Props> = {
+  public static defaultProps: Partial<Props> = {
     text: 'Loading...'
   }
 
-  render() {
+  public render(): JSX.Element {
     const { visible, text } = this.props
     return (
       <Spinner

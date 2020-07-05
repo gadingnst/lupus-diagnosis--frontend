@@ -7,7 +7,7 @@ import {
   ViewStyle
 } from 'react-native'
 import { Theme } from 'configs'
-import style from './style'
+import styles from './styles'
 
 interface Props {
   selected: boolean
@@ -18,7 +18,7 @@ interface Props {
 }
 
 class RadioButton extends PureComponent<Props> {
-  static defaultProps: Partial<Props> = {
+  public static defaultProps: Partial<Props> = {
     selected: false,
     color: Theme.primary,
     text: '',
@@ -26,7 +26,7 @@ class RadioButton extends PureComponent<Props> {
     onPress: () => {}
   }
 
-  render() {
+  public render(): JSX.Element {
     const {
       onPress,
       selected,
@@ -36,13 +36,13 @@ class RadioButton extends PureComponent<Props> {
     } = this.props
     return (
       <TouchableOpacity
-        style={[style.container, styleProp]}
+        style={[styles.container, styleProp]}
         onPress={() => onPress(selected)}
       >
-        <View style={style.radio}>
-          {selected && <View style={[style.checked, { backgroundColor }]} />}
+        <View style={styles.radio}>
+          {selected && <View style={[styles.checked, { backgroundColor }]} />}
         </View>
-        <Text style={style.text}>{text}</Text>
+        <Text style={styles.text}>{text}</Text>
       </TouchableOpacity>
     )
   }

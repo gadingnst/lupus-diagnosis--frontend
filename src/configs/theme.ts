@@ -11,7 +11,7 @@ export interface ColorTheme {
 
 export default {
   white: '#f3f7f9',
-  black: '#32325D',
+  black: '#32325d',
   primary: '#847cf3',
   secondary: '#8c8c8c',
   success: '#0dc25c',

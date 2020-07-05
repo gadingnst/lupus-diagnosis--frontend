@@ -1,5 +1,5 @@
 import Http from 'utils/Http'
-import { API_BASEURL } from 'configs'
+import { APP_API_BASEURL } from 'configs'
 
 export interface IndicationsApi {
   code: string
@@ -8,7 +8,7 @@ export interface IndicationsApi {
 }
 
 class Indication extends Http {
-  BASE_URL = API_BASEURL + '/indications'
+  BASE_URL = APP_API_BASEURL + '/indications'
 
   public getData<T = IndicationsApi[]>(code: string = '') {
     return this.get<T>(`/${code}`)

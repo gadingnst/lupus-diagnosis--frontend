@@ -1,12 +1,25 @@
 import Http from 'utils/Http'
-import { API_BASEURL } from 'configs'
+import { APP_API_BASEURL } from 'configs'
 
-class CaseApi extends Http {
-  BASE_URL = API_BASEURL
+export interface CaseData {
+  code: string
+  name: string
+  idName: string
+  posterior: number
+  percentage: number
+}
+
+export interface PredictApi {
+  prediction: CaseData
+  classification: CaseData[]
+}
+
+class Case extends Http {
+  BASE_URL = APP_API_BASEURL + '/cases'
 
   public predict(indications: string[]) {
-    return this.get(`/predict?indications=${indications.join(',')}`)
+    return this.get<PredictApi>(`/predict?indications=${indications.join(',')}`)
   }
 }
 
-export default new CaseApi()
+export default new Case()

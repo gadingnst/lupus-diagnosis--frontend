@@ -1,5 +1,5 @@
 import Http from 'utils/Http'
-import { API_BASEURL } from 'configs'
+import { APP_API_BASEURL } from 'configs'
 
 export interface DiseaseApi {
   code: string
@@ -8,10 +8,10 @@ export interface DiseaseApi {
 }
 
 class Disease extends Http {
-  BASE_URL = API_BASEURL + '/diseases'
+  BASE_URL = APP_API_BASEURL + '/diseases'
 
-  public getData(code: string | null = null) {
-    return this.get<DiseaseApi>(`/${code || ''}`)
+  public getData<T = DiseaseApi[]>(code: string | null = null) {
+    return this.get<T>(`/${code || ''}`)
   }
 }
 

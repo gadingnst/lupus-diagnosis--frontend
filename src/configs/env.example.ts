@@ -1,1 +1,1 @@
-export const API_BASEURL: string = 'http://localhost:3000'
+export const APP_API_BASEURL: string = 'http://localhost:3000'
