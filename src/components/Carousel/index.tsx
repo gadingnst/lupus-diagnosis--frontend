@@ -73,9 +73,9 @@ class Carousel extends PureComponent<Props, State> {
 
   private getInterval(offset: number): number {
     const { intervals, width } = this.state
-    for (let i = 1; i <= intervals; i++) {
+    for (let i = 0; i < intervals; i++) {
       if (offset < (width / intervals) * i) {
-        return i
+        return i + 1
       }
     }
     return 1
