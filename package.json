@@ -11,7 +11,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prestart": "node __taskrunner__/index.js",
-    "generate:source": "node __taskrunner__/index.js"
+    "task:run": "node __taskrunner__/index.js"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
