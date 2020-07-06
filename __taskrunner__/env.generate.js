@@ -4,7 +4,7 @@ const { writeFile } = fs.promises
 module.exports = () => {
   const path = './src/configs/env.ts'
   const env = Object.entries(process.env).reduce(
-    (accumulator, [env = '', value = '']) => {
+    (accumulator, [env, value]) => {
       if (env.startsWith('APP_')) {
         accumulator += `export const ${env}: string = '${value}' \n`
       }
