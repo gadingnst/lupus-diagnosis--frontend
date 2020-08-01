@@ -1,7 +1,7 @@
 import { PureComponent, ReactNode, Fragment } from 'react'
 import { View, Text, Button } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { RadioGroup, Loader, Carousel } from 'components'
+import { RadioGroup, Loader, Carousel, ErrorWrapper } from 'components'
 import { RootStackParamsList } from 'navigator'
 import Indication, { IndicationsApi } from 'api/Indication'
 import Case from 'api/Case'
@@ -73,14 +73,14 @@ class Questions extends PureComponent<Props, State> {
 
   private renderQuisoner(): ReactNode {
     const { indicationsData: data } = this.state
-    return data.map(({ code, name }, idx) => (
+    return data.map(({ kode_gejala, gejala }, idx) => (
       <View key={idx}>
-        <Text>Apakah anda merasakan gejala {name} ?</Text>
+        <Text>Apakah anda merasakan gejala {gejala} ?</Text>
         <RadioGroup
           style={{ marginVertical: 10 }}
-          onChange={(value) => this.handleAnswer(code, value)}
+          onChange={(value) => this.handleAnswer(kode_gejala, value)}
           group={[
-            { text: 'Ya', value: code },
+            { text: 'Ya', value: kode_gejala },
             { text: 'Tidak', value: '' }
           ]}
         />
@@ -88,63 +88,55 @@ class Questions extends PureComponent<Props, State> {
     ))
   }
 
-  private renderViewError(): JSX.Element {
-    const { error } = this.state
+  private renderView(): ReactNode {
+    const { interval, indicationsData: data } = this.state
+    const isMaxInterval = interval === data.length
     return (
-      <View>
-        <Text style={styles.errorText}>Terjadi Kesalahan. Error: {error}</Text>
-        <Button title="Refresh" onPress={this.refresh} />
-      </View>
+      <Fragment>
+        <Carousel
+          dotted
+          interval={interval}
+          slideStyle={styles.carousel}
+          onChangeInterval={(interval) => {
+            this.setState({ interval })
+          }}
+        >
+          {this.renderQuisoner()}
+        </Carousel>
+        <View style={styles.btnContainer}>
+          <Button
+            disabled={interval === 1}
+            color={Theme.secondary}
+            title="< Sebelumnya"
+            onPress={() => this.setState({ interval: interval - 1 })}
+          />
+          <Button
+            color={isMaxInterval ? Theme.info : Theme.primary}
+            title={isMaxInterval ? 'Diagnosa' : 'Lanjut >'}
+            onPress={() =>
+              isMaxInterval
+                ? this.predict()
+                : this.setState({ interval: interval + 1 })
+            }
+          />
+        </View>
+      </Fragment>
     )
   }
 
-  private renderView(): ReactNode {
-    const { error, loading, interval, indicationsData: data } = this.state
-    const isMaxInterval = interval === data.length
-    if (!loading) {
-      if (error) {
-        return this.renderViewError()
-      }
-      return (
-        <Fragment>
-          <Carousel
-            dotted
-            interval={interval}
-            slideStyle={styles.carousel}
-            onChangeInterval={(interval) => {
-              this.setState({ interval })
-            }}
-          >
-            {this.renderQuisoner()}
-          </Carousel>
-          <View style={styles.btnContainer}>
-            <Button
-              disabled={interval === 1}
-              color={Theme.secondary}
-              title="< Sebelumnya"
-              onPress={() => this.setState({ interval: interval - 1 })}
-            />
-            <Button
-              color={isMaxInterval ? Theme.info : Theme.primary}
-              title={isMaxInterval ? 'Diagnosa' : 'Lanjut >'}
-              onPress={() =>
-                isMaxInterval
-                  ? this.predict()
-                  : this.setState({ interval: interval + 1 })
-              }
-            />
-          </View>
-        </Fragment>
-      )
-    }
-  }
-
   public render(): JSX.Element {
-    const { loading } = this.state
+    const { loading, error } = this.state
     return (
       <View style={styles.container}>
         <Loader visible={loading} />
-        {this.renderView()}
+        {!loading && (
+          <ErrorWrapper
+            error={error}
+            fallbackTitle="Refresh"
+            fallbackFunc={this.refresh}
+            component={this.renderView()}
+          />
+        )}
       </View>
     )
   }

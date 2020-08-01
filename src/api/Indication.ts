@@ -2,9 +2,9 @@ import Http from 'utils/Http'
 import { APP_API_BASEURL } from 'configs'
 
 export interface IndicationsApi {
-  code: string
-  name: string
-  description: string
+  kode_gejala: string
+  gejala: string
+  des_gejala: string
 }
 
 class Indication extends Http {
