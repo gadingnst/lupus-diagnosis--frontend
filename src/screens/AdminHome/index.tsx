@@ -1,11 +1,10 @@
 import { PureComponent } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { connect } from 'react-redux'
 import { Menu } from 'components'
 import { RootStackParamsList } from 'navigator'
 import styles from './styles'
-import { ScrollView } from 'react-native-gesture-handler'
 import { AdminData } from 'api/Admin'
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminHome'> {

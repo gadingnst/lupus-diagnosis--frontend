@@ -1,15 +1,21 @@
 import { PureComponent, ReactText, Fragment, ReactNode } from 'react'
-import { ScrollView, View, Text, Button, ActivityIndicator } from 'react-native'
+import {
+  ScrollView,
+  View,
+  Text,
+  Button,
+  TextInput,
+  ActivityIndicator
+} from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Picker } from '@react-native-community/picker'
+import { connect } from 'react-redux'
 import Indication, { IndicationsApi } from 'api/Indication'
 import { Menu, ErrorWrapper } from 'components'
 import { RootStackParamsList } from 'navigator'
 import styles from './styles'
 import { Theme } from 'configs'
-import { TextInput } from 'react-native-gesture-handler'
 import { AdminData } from 'api/Admin'
-import { connect } from 'react-redux'
 
 interface Props
   extends StackScreenProps<RootStackParamsList, 'ManageIndication'> {

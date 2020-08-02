@@ -1,10 +1,9 @@
 import { PureComponent, ReactNode } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, ScrollView } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamsList } from 'navigator'
 import { PredictApi } from 'api/Case'
-import { ScrollView } from 'react-native-gesture-handler'
 import styles from './styles'
 import { Theme } from 'configs'
 
