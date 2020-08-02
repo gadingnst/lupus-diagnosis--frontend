@@ -57,5 +57,8 @@ export default StyleSheet.create({
   },
   btnManage: {
     marginHorizontal: 5
+  },
+  loader: {
+    margin: 20
   }
 })

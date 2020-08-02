@@ -1,9 +1,9 @@
 import { PureComponent, ReactText, Fragment, ReactNode } from 'react'
-import { ScrollView, View, Text, Button } from 'react-native'
+import { ScrollView, View, Text, Button, ActivityIndicator } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Picker } from '@react-native-community/picker'
 import Indication, { IndicationsApi } from 'api/Indication'
-import { Menu, Loader, ErrorWrapper } from 'components'
+import { Menu, ErrorWrapper } from 'components'
 import { RootStackParamsList } from 'navigator'
 import styles from './styles'
 import { Theme } from 'configs'
@@ -13,11 +13,15 @@ import { connect } from 'react-redux'
 
 interface Props
   extends StackScreenProps<RootStackParamsList, 'ManageIndication'> {
-  admin: AdminData
+  admin: Partial<AdminData>
+}
+
+interface Selected extends IndicationsApi {
+  idx: number
 }
 
 interface State {
-  selected?: IndicationsApi
+  selected?: Selected
   data: IndicationsApi[]
   loading: boolean
   error: string
@@ -41,7 +45,10 @@ class ManageIndication extends PureComponent<Props, State> {
       const { data } = await Indication.getData()
       this.setState({
         data: data as IndicationsApi[],
-        selected: (data as IndicationsApi[])[0]
+        selected: {
+          ...(data as Selected[])[0],
+          idx: 0
+        }
       })
     } catch (reason) {
       const { message: error } = reason
@@ -64,7 +71,36 @@ class ManageIndication extends PureComponent<Props, State> {
     this.setState({ edit: !edit })
   }
 
-  private saveData = () => {}
+  private cancelEdit = () => {
+    const { selected, data } = this.state
+    const rollData = {
+      ...data[selected?.idx as number],
+      idx: selected?.idx as number
+    }
+    this.setState({ selected: rollData })
+    this.toggleEdit()
+  }
+
+  private onChangeData = (key: keyof IndicationsApi) => (text: string) => {
+    const { selected } = this.state
+    const data: Selected = {
+      ...(selected as Selected),
+      [key]: text
+    }
+    this.setState({ selected: data })
+  }
+
+  private saveData = async () => {
+    const { admin } = this.props
+    const { selected } = this.state
+    this.toggleEdit()
+    await Indication.updateData(
+      selected?.kode_gejala as string,
+      admin.token as string,
+      selected as IndicationsApi
+    )
+    this.getData()
+  }
 
   private renderPicker(): ReactNode {
     const { data, selected } = this.state
@@ -76,11 +112,11 @@ class ManageIndication extends PureComponent<Props, State> {
           style={styles.picker}
           onValueChange={this.setIndication}
         >
-          {data.map((indication) => (
+          {data.map((indication, idx) => (
             <Picker.Item
               key={indication.kode_gejala}
               label={indication.kode_gejala}
-              value={JSON.stringify(indication)}
+              value={JSON.stringify({ idx, ...indication })}
             />
           ))}
         </Picker>
@@ -89,12 +125,15 @@ class ManageIndication extends PureComponent<Props, State> {
   }
 
   private renderToggleEdit() {
-    const { edit } = this.state
+    const { edit, selected } = this.state
+    const { gejala: indication = '', des_gejala: desc = '' }: any = selected
+    const disabled = !(indication && desc)
     return (
       <View style={styles.toggleEditContainer}>
         {edit && (
           <View style={styles.btnManage}>
             <Button
+              disabled={disabled}
               title="Simpan"
               color={Theme.success}
               onPress={this.saveData}
@@ -105,7 +144,7 @@ class ManageIndication extends PureComponent<Props, State> {
           <Button
             title={edit ? 'Batal' : 'Edit'}
             color={edit ? Theme.danger : Theme.primary}
-            onPress={this.toggleEdit}
+            onPress={edit ? this.cancelEdit : this.toggleEdit}
           />
         </View>
       </View>
@@ -118,17 +157,9 @@ class ManageIndication extends PureComponent<Props, State> {
       <View style={styles.indicationsContainer}>
         <View style={styles.indicationDetail}>
           <Text style={styles.indicationText}>Kode:</Text>
-          {edit ? (
-            <TextInput
-              style={styles.indicationInput}
-              value={selected?.kode_gejala}
-              placeholder="Kode Gejala"
-            />
-          ) : (
-            <Text style={styles.indicationTextResult}>
-              {selected?.kode_gejala}
-            </Text>
-          )}
+          <Text style={styles.indicationTextResult}>
+            {selected?.kode_gejala}
+          </Text>
         </View>
         <View style={styles.indicationDetail}>
           <Text style={styles.indicationText}>Gejala:</Text>
@@ -137,6 +168,7 @@ class ManageIndication extends PureComponent<Props, State> {
               style={styles.indicationInput}
               value={selected?.gejala}
               placeholder="Gejala"
+              onChangeText={this.onChangeData('gejala')}
             />
           ) : (
             <Text style={styles.indicationTextResult}>{selected?.gejala}</Text>
@@ -149,6 +181,7 @@ class ManageIndication extends PureComponent<Props, State> {
               style={styles.indicationInput}
               value={selected?.des_gejala}
               placeholder="Deskripsi Gejala"
+              onChangeText={this.onChangeData('des_gejala')}
             />
           ) : (
             <Text style={styles.indicationTextResult}>
@@ -161,33 +194,41 @@ class ManageIndication extends PureComponent<Props, State> {
   }
 
   private renderView(): JSX.Element {
+    const { loading } = this.state
     const { navigation, admin } = this.props
     return (
       <Fragment>
         <Text style={styles.title}>Selamat Datang, {admin.username}</Text>
         <Menu navigation={navigation} />
         <Text style={styles.title}>Daftar Data Gejala</Text>
-        {this.renderPicker()}
-        {this.renderIndications()}
-        {this.renderToggleEdit()}
+        {loading ? (
+          <ActivityIndicator
+            style={styles.loader}
+            color={Theme.primary}
+            size="large"
+          />
+        ) : (
+          <Fragment>
+            {this.renderPicker()}
+            {this.renderIndications()}
+            {this.renderToggleEdit()}
+          </Fragment>
+        )}
       </Fragment>
     )
   }
 
   public render(): JSX.Element {
-    const { loading, error } = this.state
+    const { error } = this.state
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Loader visible={loading} />
-          {!loading && (
-            <ErrorWrapper
-              error={error}
-              fallbackTitle="Refresh"
-              fallbackFunc={this.refresh}
-              component={this.renderView()}
-            />
-          )}
+          <ErrorWrapper
+            error={error}
+            fallbackTitle="Refresh"
+            fallbackFunc={this.refresh}
+            component={this.renderView()}
+          />
         </View>
       </ScrollView>
     )

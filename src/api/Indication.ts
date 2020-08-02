@@ -13,6 +13,16 @@ class Indication extends Http {
   public getData<T = IndicationsApi[]>(code: string = '') {
     return this.get<T>(`/${code}`)
   }
+
+  public updateData<T = IndicationsApi>(
+    code: string,
+    token: string,
+    data: Partial<T>
+  ) {
+    return this.put<Partial<T>, IndicationsApi>(`/${code}`, data, {
+      authorization: `Bearer ${token}`
+    })
+  }
 }
 
 export default new Indication()

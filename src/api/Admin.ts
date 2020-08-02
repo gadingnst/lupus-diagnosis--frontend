@@ -5,6 +5,7 @@ export interface AdminData {
   id_admin: string
   username: string
   email: string
+  token?: string
 }
 
 interface LoginData {
@@ -20,11 +21,18 @@ class Admin extends Http {
     try {
       const response = await this.post<LoginData, any>('/login', loginData)
       if (response.data) {
-        return this.get<AdminData>('/info', {
+        const result = await this.get<AdminData>('/info', {
           headers: {
             authorization: `Bearer ${response.data.token}`
           }
         })
+        return {
+          ...result,
+          data: {
+            ...result.data,
+            token: response.data.token
+          }
+        }
       } else {
         throw response
       }

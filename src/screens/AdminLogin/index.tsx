@@ -103,9 +103,16 @@ class AdminLogin extends PureComponent<Props, State> {
   }
 
   private renderButtons(): JSX.Element {
+    const { username, email, password } = this.state
+    const disabled = !(username && email && password)
     return (
       <View style={styles.btnContainer}>
-        <Button color={Theme.primary} title="LOGIN" onPress={this.login} />
+        <Button
+          disabled={disabled}
+          color={Theme.primary}
+          title="LOGIN"
+          onPress={this.login}
+        />
         <Button color={Theme.danger} title="BATAL" onPress={this.back} />
       </View>
     )
