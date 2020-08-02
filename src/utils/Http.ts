@@ -27,7 +27,6 @@ abstract class Http {
     requestBody: K,
     headers?: any
   ): Promise<HttpResponse<T>> {
-    console.log(JSON.stringify(requestBody), 'BAC')
     return fetch(this.BASE_URL + endpoint, {
       method: 'POST',
       headers: {

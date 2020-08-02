@@ -1,5 +1,6 @@
 import { PureComponent } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
+import { CommonActions } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { setData } from 'stores/Actions/Admin'
 import { RootStackParamsList } from 'navigator'
@@ -22,12 +23,16 @@ class Splash extends PureComponent<Props, State> {
   public componentDidMount() {
     const { setAdminData, navigation } = this.props
     AsyncStorage.getItem('@admin:data').then((value) => {
+      const screen: keyof RootStackParamsList = value ? 'Admin' : 'Guest'
       if (value) {
         setAdminData(JSON.parse(value))
-        navigation.replace('Admin')
-      } else {
-        navigation.replace('Guest')
       }
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: screen }]
+        })
+      )
       this.setState({ loading: false })
     })
   }

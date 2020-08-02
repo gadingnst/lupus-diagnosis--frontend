@@ -32,7 +32,7 @@ class Result extends PureComponent<Props, State> {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: 'Questions' }]
+        routes: [{ name: 'VisitorInput' }]
       })
     )
   }
@@ -41,7 +41,7 @@ class Result extends PureComponent<Props, State> {
     const { data } = this.state
     return data?.classification.map((item, idx) => (
       <Text key={idx} style={styles.classification}>
-        {item.idName} : {item.percentage}
+        {item.des_penyakit} : {item.percentage}%
       </Text>
     ))
   }
@@ -56,7 +56,8 @@ class Result extends PureComponent<Props, State> {
         <Text>
           Anda terindikasi Penyakit
           <Text style={styles.prediction}>
-            &nbsp;{data?.prediction.idName} / {data?.prediction.name}.
+            &nbsp;{data?.prediction.des_penyakit} /{' '}
+            {data?.prediction.nama_penyakit}.
           </Text>
         </Text>
         <View style={styles.btnContainer}>

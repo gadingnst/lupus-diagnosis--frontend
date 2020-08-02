@@ -2,9 +2,9 @@ import Http from 'utils/Http'
 import { APP_API_BASEURL } from 'configs'
 
 export interface CaseData {
-  code: string
-  name: string
-  idName: string
+  kode_penyakit: string
+  nama_penyakit: string
+  des_penyakit: string
   posterior: number
   percentage: number
 }

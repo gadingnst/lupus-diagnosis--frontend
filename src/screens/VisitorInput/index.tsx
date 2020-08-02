@@ -18,11 +18,19 @@ class VisitorInput extends PureComponent<Props, State> {
     email: ''
   }
 
-  private save = async (): Promise<void> => {}
+  private save = async (): Promise<void> => {
+    const { navigation } = this.props
+    // TODO
+    navigation.navigate('Questions')
+  }
 
   private back = (): void => {
     const { navigation } = this.props
-    navigation.goBack()
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      navigation.navigate('Landing')
+    }
   }
 
   private onChangeName = (name: string) => {
