@@ -32,5 +32,8 @@ export default StyleSheet.create({
     width: '100%',
     padding: 10,
     marginVertical: 15
+  },
+  msgError: {
+    color: Theme.danger
   }
 })

@@ -1,5 +1,5 @@
 interface HttpResponse<T> {
-  code: string
+  code: number
   status: string
   message: string
   error: boolean
@@ -10,34 +10,47 @@ abstract class Http {
   protected abstract BASE_URL: string
 
   private responseHandler<T>(response: Response): Promise<T> {
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
     return response.json()
   }
 
-  protected get<T>(endpoint: string = ''): Promise<HttpResponse<T>> {
-    return fetch(this.BASE_URL + endpoint).then((res) =>
+  protected get<T>(
+    endpoint: string = '',
+    requestInit?: RequestInit
+  ): Promise<HttpResponse<T>> {
+    return fetch(this.BASE_URL + endpoint, requestInit).then((res) =>
       this.responseHandler(res)
     )
   }
 
   protected post<K, T>(
     endpoint: string,
-    requestBody: K
+    requestBody: K,
+    headers?: any
   ): Promise<HttpResponse<T>> {
+    console.log(JSON.stringify(requestBody), 'BAC')
     return fetch(this.BASE_URL + endpoint, {
       method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        ...headers
+      },
       body: JSON.stringify(requestBody)
     }).then((res) => this.responseHandler(res))
   }
 
   protected put<K, T>(
     endpoint: string,
-    requestBody: K
+    requestBody: K,
+    headers?: any
   ): Promise<HttpResponse<T>> {
     return fetch(this.BASE_URL + endpoint, {
       method: 'PUT',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        ...headers
+      },
       body: JSON.stringify(requestBody)
     }).then((res) => this.responseHandler(res))
   }

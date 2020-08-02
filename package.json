@@ -14,6 +14,7 @@
     "task:run": "node __taskrunner__/index.js"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/picker": "^1.6.5",
     "@react-navigation/native": "^5.6.1",
@@ -25,7 +26,10 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "^2.9.0",
-    "react-native-vector-icons": "^7.0.0"
+    "react-native-vector-icons": "^7.0.0",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "redux-promise-middleware": "^6.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -35,6 +39,7 @@
     "@types/react-native": "0.62.2",
     "@types/react-native-loading-spinner-overlay": "^0.5.2",
     "@types/react-native-vector-icons": "^6.4.5",
+    "@types/react-redux": "^7.1.9",
     "@types/react-test-renderer": "16.9.2",
     "@typescript-eslint/eslint-plugin": "2.27.0",
     "@typescript-eslint/parser": "2.27.0",

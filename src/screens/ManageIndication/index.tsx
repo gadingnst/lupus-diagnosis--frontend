@@ -8,9 +8,13 @@ import { RootStackParamsList } from 'navigator'
 import styles from './styles'
 import { Theme } from 'configs'
 import { TextInput } from 'react-native-gesture-handler'
+import { AdminData } from 'api/Admin'
+import { connect } from 'react-redux'
 
 interface Props
-  extends StackScreenProps<RootStackParamsList, 'ManageIndication'> {}
+  extends StackScreenProps<RootStackParamsList, 'ManageIndication'> {
+  admin: AdminData
+}
 
 interface State {
   selected?: IndicationsApi
@@ -157,10 +161,10 @@ class ManageIndication extends PureComponent<Props, State> {
   }
 
   private renderView(): JSX.Element {
-    const { navigation } = this.props
+    const { navigation, admin } = this.props
     return (
       <Fragment>
-        <Text style={styles.title}>Selamat Datang, (nama admin)</Text>
+        <Text style={styles.title}>Selamat Datang, {admin.username}</Text>
         <Menu navigation={navigation} />
         <Text style={styles.title}>Daftar Data Gejala</Text>
         {this.renderPicker()}
@@ -190,4 +194,8 @@ class ManageIndication extends PureComponent<Props, State> {
   }
 }
 
-export default ManageIndication
+const mapStateToProps = ({ AdminReducer }: any) => ({
+  admin: AdminReducer.data
+})
+
+export default connect(mapStateToProps)(ManageIndication)
