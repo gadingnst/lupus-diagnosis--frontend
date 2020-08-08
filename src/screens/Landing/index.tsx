@@ -1,5 +1,5 @@
 import { PureComponent } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, Image } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamsList } from 'navigator'
 import { Theme } from 'configs'
@@ -42,7 +42,10 @@ class Home extends PureComponent<Props> {
     return (
       <View style={styles.container}>
         <View style={styles.picContainer}>
-          <Text>FOTO</Text>
+          <Image
+            style={styles.landingImage}
+            source={require('../../assets/landing.jpg')}
+          />
         </View>
         <Text style={styles.title}>
           SELAMAT DATANG DI SISTEM PAKAR DIAGNOSA PENYAKIT LUPUS

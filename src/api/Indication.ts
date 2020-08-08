@@ -8,7 +8,7 @@ export interface IndicationsApi {
 }
 
 class Indication extends Http {
-  BASE_URL = APP_API_BASEURL + '/indications'
+  BASE_URL = APP_API_BASEURL + '/api/indications'
 
   public getData<T = IndicationsApi[]>(code: string = '') {
     return this.get<T>(`/${code}`)

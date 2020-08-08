@@ -16,5 +16,11 @@ export default StyleSheet.create({
     height: 120,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  landingImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: 120,
+    borderRadius: 10
   }
 })

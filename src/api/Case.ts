@@ -5,6 +5,7 @@ export interface CaseData {
   kode_penyakit: string
   nama_penyakit: string
   des_penyakit: string
+  gambar_penyakit: string
   posterior: number
   percentage: number
 }
@@ -15,7 +16,7 @@ export interface PredictApi {
 }
 
 class Case extends Http {
-  BASE_URL = APP_API_BASEURL + '/cases'
+  BASE_URL = APP_API_BASEURL + '/api/cases'
 
   public predict(indications: string[]) {
     return this.get<PredictApi>(`/predict?indications=${indications.join(',')}`)

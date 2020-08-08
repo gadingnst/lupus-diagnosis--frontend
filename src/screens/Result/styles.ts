@@ -19,7 +19,7 @@ export default StyleSheet.create({
     fontSize: 16
   },
   subtitle: {
-    marginVertical: 25,
+    marginTop: 25,
     fontSize: 14
   },
   prediction: {
@@ -29,5 +29,18 @@ export default StyleSheet.create({
     marginVertical: 25,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  picContainer: {
+    width: '100%',
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 15
+  },
+  landingImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: 120,
+    borderRadius: 10
   }
 })

@@ -35,5 +35,11 @@ export default StyleSheet.create({
   },
   btn: {
     padding: 10
+  },
+  landingImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: 120,
+    borderRadius: 10
   }
 })

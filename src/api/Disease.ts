@@ -5,10 +5,11 @@ export interface DiseaseApi {
   kode_penyakit: string
   nama_penyakit: string
   des_penyakit: string
+  gambar_penyakit: string
 }
 
 class Disease extends Http {
-  BASE_URL = APP_API_BASEURL + '/diseases'
+  BASE_URL = APP_API_BASEURL + '/api/diseases'
 
   public getData<T = DiseaseApi[]>(code: string | null = null) {
     return this.get<T>(`/${code || ''}`)

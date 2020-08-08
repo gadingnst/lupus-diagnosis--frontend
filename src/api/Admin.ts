@@ -15,7 +15,7 @@ interface LoginData {
 }
 
 class Admin extends Http {
-  BASE_URL = APP_API_BASEURL + '/admins'
+  BASE_URL = APP_API_BASEURL + '/api/admins'
 
   public async login(loginData: LoginData) {
     try {

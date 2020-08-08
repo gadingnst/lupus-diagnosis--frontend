@@ -24,5 +24,9 @@ export default StyleSheet.create({
   errorText: {
     color: Theme.danger,
     marginBottom: 15
+  },
+  subtitle: {
+    marginVertical: 10,
+    color: '#999999'
   }
 })

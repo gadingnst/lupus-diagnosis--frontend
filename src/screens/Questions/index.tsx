@@ -73,9 +73,10 @@ class Questions extends PureComponent<Props, State> {
 
   private renderQuisoner(): ReactNode {
     const { indicationsData: data } = this.state
-    return data.map(({ kode_gejala, gejala }, idx) => (
+    return data.map(({ kode_gejala, gejala, des_gejala }, idx) => (
       <View key={idx}>
         <Text>Apakah anda merasakan gejala {gejala} ?</Text>
+        <Text style={styles.subtitle}>Keterangan: {des_gejala}</Text>
         <RadioGroup
           style={{ marginVertical: 10 }}
           onChange={(value) => this.handleAnswer(kode_gejala, value)}

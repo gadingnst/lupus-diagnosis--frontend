@@ -1,5 +1,5 @@
 import { PureComponent } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Image } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { connect } from 'react-redux'
 import { Menu } from 'components'
@@ -20,7 +20,10 @@ class AdminHome extends PureComponent<Props> {
           <Text style={styles.title}>Selamat Datang, {data.username}</Text>
           <Menu navigation={navigation} />
           <View style={styles.picContainer}>
-            <Text style={styles.title}>FOTO</Text>
+            <Image
+              style={styles.landingImage}
+              source={require('../../assets/landing.jpg')}
+            />
           </View>
         </View>
       </ScrollView>

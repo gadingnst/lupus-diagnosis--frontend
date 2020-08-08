@@ -1,11 +1,11 @@
 import { PureComponent, ReactNode } from 'react'
-import { View, Text, Button, ScrollView } from 'react-native'
+import { View, Text, Button, ScrollView, Image } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamsList } from 'navigator'
 import { PredictApi } from 'api/Case'
 import styles from './styles'
-import { Theme } from 'configs'
+import { Theme, APP_API_BASEURL } from 'configs'
 
 export interface ParamsList {
   prediction?: PredictApi
@@ -52,6 +52,12 @@ class Result extends PureComponent<Props, State> {
         <Text style={styles.title}>Hasil Diagnosa</Text>
         <View style={styles.result}>{this.renderResult()}</View>
         <Text style={styles.subtitle}>Kesimpulan :</Text>
+        <View style={styles.picContainer}>
+          <Image
+            style={styles.landingImage}
+            source={{ uri: APP_API_BASEURL + data?.prediction.gambar_penyakit }}
+          />
+        </View>
         <Text>
           Anda terindikasi Penyakit
           <Text style={styles.prediction}>
