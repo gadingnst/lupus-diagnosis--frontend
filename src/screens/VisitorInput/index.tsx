@@ -2,6 +2,8 @@ import { PureComponent } from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamsList } from 'navigator'
+import { Loader } from 'components'
+import Visitor from 'api/Visitor'
 import styles from './styles'
 import { Theme } from 'configs'
 
@@ -9,18 +11,22 @@ interface Props extends StackScreenProps<RootStackParamsList, 'VisitorInput'> {}
 
 interface State {
   name: string
-  email: string
+  loading: boolean
 }
 
 class VisitorInput extends PureComponent<Props, State> {
   public state: State = {
     name: '',
-    email: ''
+	loading: false
   }
 
   private save = async (): Promise<void> => {
     const { navigation } = this.props
-    // TODO
+	const { name } = this.state
+    const nama_pengunjung = name
+	this.setState({ loading: true })
+	await Visitor.add({ nama_pengunjung })
+	this.setState({ loading: false, name: '' })
     navigation.navigate('Questions')
   }
 
@@ -36,13 +42,9 @@ class VisitorInput extends PureComponent<Props, State> {
   private onChangeName = (name: string) => {
     this.setState({ name })
   }
-
-  private onChangeEmail = (email: string) => {
-    this.setState({ email })
-  }
-
+  
   private renderInputs(): JSX.Element {
-    const { name, email } = this.state
+    const { name } = this.state
     return (
       <View style={styles.inputContainer}>
         <TextInput
@@ -51,19 +53,13 @@ class VisitorInput extends PureComponent<Props, State> {
           value={name}
           onChangeText={this.onChangeName}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail Pengunjung"
-          value={email}
-          onChangeText={this.onChangeEmail}
-        />
       </View>
     )
   }
 
   private renderButtons(): JSX.Element {
-    const { name, email } = this.state
-    const disabled = !(name && email)
+    const { name } = this.state
+    const disabled = !name
     return (
       <View style={styles.btnContainer}>
         <Button
@@ -78,8 +74,10 @@ class VisitorInput extends PureComponent<Props, State> {
   }
 
   public render(): JSX.Element {
+	const { name, loading } = this.state
     return (
       <View style={styles.container}>
+		<Loader visible={loading} />
         <Text style={styles.title}>Masukkan Data Pengunjung</Text>
         {this.renderInputs()}
         {this.renderButtons()}
