@@ -5,6 +5,7 @@ export interface IndicationsApi {
   kode_gejala: string
   gejala: string
   des_gejala: string
+  gambar_gejala: string
 }
 
 class Indication extends Http {

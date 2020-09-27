@@ -28,5 +28,18 @@ export default StyleSheet.create({
   subtitle: {
     marginVertical: 10,
     color: '#999999'
+  },
+  picContainer: {
+    width: '100%',
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 15
+  },
+  landingImage: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: 120,
+    borderRadius: 10
   }
 })

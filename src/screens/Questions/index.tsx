@@ -1,12 +1,12 @@
 import { PureComponent, ReactNode, Fragment } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RadioGroup, Loader, Carousel, ErrorWrapper } from 'components'
 import { RootStackParamsList } from 'navigator'
 import Indication, { IndicationsApi } from 'api/Indication'
 import Case from 'api/Case'
-import { Theme } from 'configs'
+import { Theme, APP_API_BASEURL } from 'configs'
 import styles from './styles'
 import { VisitorApi } from 'api/Visitor'
 
@@ -98,6 +98,12 @@ class Questions extends PureComponent<Props, State> {
     const isMaxInterval = interval === data.length
     return (
       <Fragment>
+        <View style={styles.picContainer}>
+          <Image
+            style={styles.landingImage}
+            source={{ uri: APP_API_BASEURL + data[interval - 1].gambar_gejala }}
+          />
+        </View>
         <Carousel
           dotted
           interval={interval}
