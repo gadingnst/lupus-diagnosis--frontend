@@ -32,5 +32,12 @@ export default StyleSheet.create({
     width: '100%',
     padding: 10,
     marginVertical: 15
+  },
+  inputTxt: {
+    fontWeight: 'bold'
+  },
+  inputView: {
+    flex: 1,
+    justifyContent: 'center'
   }
 })

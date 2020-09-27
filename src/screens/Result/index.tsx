@@ -40,7 +40,7 @@ class Result extends PureComponent<Props, State> {
     const { data } = this.state
     return data?.classification.map((item, idx) => (
       <Text key={idx} style={styles.classification}>
-        {item.des_penyakit} : {item.percentage}%
+        {item.nama_penyakit} : {item.percentage}%
       </Text>
     ))
   }
@@ -58,14 +58,37 @@ class Result extends PureComponent<Props, State> {
             source={{ uri: APP_API_BASEURL + data?.prediction.gambar_penyakit }}
           />
         </View>
-        <Text>
+        <Text style={{ fontSize: 16, marginVertical: 10 }}>
           Anda terindikasi Penyakit
           <Text style={styles.prediction}>
-            &nbsp;{data?.prediction.des_penyakit} /{' '}
-            {data?.prediction.nama_penyakit}.
+            &nbsp;{data?.prediction.nama_penyakit}.
           </Text>
         </Text>
-        <View style={styles.btnContainer}>
+        <Text style={styles.txt}>{data?.prediction.des_penyakit}</Text>
+        <Text style={styles.txt}>Jika anda mengalami penyakit lupus, segera lakukan pemeriksaan ke dokter pemerhati lupus.</Text>
+        <Text style={[styles.txt, styles.prediction, { marginTop: 10 }]}>
+          Cara menanggulangi penyakit lupus.
+        </Text>
+        <Text style={styles.txt}>
+          Meski penyakit lupus adalah penyakit yang tak dapat disembuhkan, namun odapus tetap bias hidup dengan damai dan mengurangi resiko gangguan yang mungkin muncul.
+          Beberapa hal yang dapat dilakukan odapus untuk mencegah komplikasi muncul :
+        </Text>
+        <Text style={styles.txt}>
+          1. <Text style={styles.prediction}>Melakukan olahraga dengan rutin</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+        </Text>
+        <Text style={styles.txt}>
+          2. <Text style={styles.prediction}>Berhenti merokok</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+        </Text>
+        <Text style={styles.txt}>
+          3. <Text style={styles.prediction}>Istirahat yang cukup dan hindari stress</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+        </Text>
+        <Text style={styles.txt}>
+          4. <Text style={styles.prediction}>Pahami tubuh</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+        </Text>
+        <Text style={styles.txt}>
+          5. <Text style={styles.prediction}>Hindari paparan sinar matahari</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+        </Text>
+        <View style={[styles.btnContainer, { marginBottom: 50 }]}>
           <Button title="Selesai" color={Theme.success} onPress={this.done} />
         </View>
       </ScrollView>

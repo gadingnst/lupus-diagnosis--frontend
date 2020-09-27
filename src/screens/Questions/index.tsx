@@ -1,5 +1,6 @@
 import { PureComponent, ReactNode, Fragment } from 'react'
 import { View, Text, Button } from 'react-native'
+import { connect } from 'react-redux'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RadioGroup, Loader, Carousel, ErrorWrapper } from 'components'
 import { RootStackParamsList } from 'navigator'
@@ -7,6 +8,7 @@ import Indication, { IndicationsApi } from 'api/Indication'
 import Case from 'api/Case'
 import { Theme } from 'configs'
 import styles from './styles'
+import { VisitorApi } from 'api/Visitor'
 
 interface State {
   interval: number
@@ -16,7 +18,9 @@ interface State {
   indications: string[]
 }
 
-interface Props extends StackScreenProps<RootStackParamsList, 'Questions'> {}
+interface Props extends StackScreenProps<RootStackParamsList, 'Questions'> {
+  data: VisitorApi
+}
 
 class Questions extends PureComponent<Props, State> {
   public state: State = {
@@ -48,11 +52,11 @@ class Questions extends PureComponent<Props, State> {
   }
 
   private predict = (): void => {
-    const { navigation } = this.props
+    const { navigation, data } = this.props
     const { indications } = this.state
     this.setState({ loading: true }, async () => {
       try {
-        const { data: prediction } = await Case.predict(indications)
+        const { data: prediction } = await Case.predict(indications, data)
         navigation.navigate('Result', { prediction })
       } catch (reason) {
         const { message: error } = reason
@@ -143,4 +147,8 @@ class Questions extends PureComponent<Props, State> {
   }
 }
 
-export default Questions
+const mapStateToProps = ({ VisitorReducer }: any) => ({
+  data: VisitorReducer.data
+})
+
+export default connect(mapStateToProps)(Questions)
