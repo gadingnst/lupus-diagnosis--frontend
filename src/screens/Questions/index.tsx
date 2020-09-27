@@ -98,6 +98,9 @@ class Questions extends PureComponent<Props, State> {
     const isMaxInterval = interval === data.length
     return (
       <Fragment>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+          {data[interval - 1].gejala}
+        </Text>
         <View style={styles.picContainer}>
           <Image
             style={styles.landingImage}
