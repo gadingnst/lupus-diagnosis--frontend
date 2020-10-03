@@ -16,11 +16,22 @@ export interface PredictApi {
   classification: CaseData[]
 }
 
+export interface HistoryData {
+  id?: string
+  visitor: VisitorApi
+  indications: string[]
+  result: PredictApi
+}
+
 class Case extends Http {
   BASE_URL = APP_API_BASEURL + '/api/cases'
 
   public predict(indications: string[], visitor: VisitorApi) {
     return this.post<{ visitor: VisitorApi }, PredictApi>(`/predict?indications=${indications.join(',')}`, { visitor })
+  }
+
+  public getHistory() {
+    return this.get<HistoryData[]>('/history')
   }
 }
 
