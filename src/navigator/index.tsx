@@ -9,6 +9,8 @@ import ManageIndication from 'screens/ManageIndication'
 import VisitorInput from 'screens/VisitorInput'
 import Questions from 'screens/Questions'
 import Result, { ParamsList as ResultParamsList } from 'screens/Result'
+import FeedbackInput from 'screens/FeedbackInput'
+
 const { Navigator, Screen } = createStackNavigator()
 
 export type RootStackParamsList = {
@@ -22,6 +24,7 @@ export type RootStackParamsList = {
   VisitorInput: undefined
   Questions: undefined
   Result: ResultParamsList
+  FeedbackInput: undefined
 }
 
 export const Admin = () => (
@@ -38,6 +41,7 @@ export const Guest = () => (
     <Screen name="VisitorInput" component={VisitorInput} />
     <Screen name="Questions" component={Questions} />
     <Screen name="Result" component={Result} />
+    <Screen name="FeedbackInput" component={FeedbackInput} />
   </Navigator>
 )
 

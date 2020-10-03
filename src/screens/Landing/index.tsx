@@ -18,6 +18,11 @@ class Home extends PureComponent<Props> {
     navigation.navigate('VisitorInput')
   }
 
+  private navigateToFeedback = () => {
+    const { navigation } = this.props
+    navigation.navigate('FeedbackInput')
+  }
+
   private renderButtons() {
     return (
       <View style={styles.selectUser}>
@@ -32,6 +37,13 @@ class Home extends PureComponent<Props> {
             color={Theme.info}
             title="PENGUNJUNG"
             onPress={this.navigateToVisitor}
+          />
+        </View>
+        <View>
+          <Button
+            color={Theme.success}
+            title="KRITIK & SARAN"
+            onPress={this.navigateToFeedback}
           />
         </View>
       </View>

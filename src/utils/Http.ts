@@ -22,7 +22,7 @@ abstract class Http {
     )
   }
 
-  protected post<K, T>(
+  protected post<K, T = K>(
     endpoint: string,
     requestBody: K,
     headers?: any
