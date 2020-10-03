@@ -10,6 +10,7 @@ import VisitorInput from 'screens/VisitorInput'
 import Questions from 'screens/Questions'
 import Result, { ParamsList as ResultParamsList } from 'screens/Result'
 import FeedbackInput from 'screens/FeedbackInput'
+import Feedback from 'screens/Feedback'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -25,11 +26,13 @@ export type RootStackParamsList = {
   Questions: undefined
   Result: ResultParamsList
   FeedbackInput: undefined
+  Feedback: undefined
 }
 
 export const Admin = () => (
   <Navigator headerMode="none" initialRouteName="AdminHome">
     <Screen name="AdminHome" component={AdminHome} />
+    <Screen name="Feedback" component={Feedback} />
     <Screen name="ManageIndication" component={ManageIndication} />
   </Navigator>
 )

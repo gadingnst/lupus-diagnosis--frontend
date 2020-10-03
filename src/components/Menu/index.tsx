@@ -52,6 +52,7 @@ class Menu extends PureComponent<Props> {
       <View style={styles.container}>
         {this.renderMenu('home', 'HOME', 'AdminHome')}
         {this.renderMenu('database', 'DATA GEJALA', 'ManageIndication')}
+        {this.renderMenu('book', 'DATA FEEDBACK', 'Feedback')}
         {this.renderMenu('sign-out', 'LOGOUT', 'AdminLogin', this.logout)}
       </View>
     )

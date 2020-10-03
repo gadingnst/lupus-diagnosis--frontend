@@ -15,7 +15,7 @@ class Feedback extends Http {
   }
 
   public getData() {
-    return this.get<FeedbackData>('/')
+    return this.get<FeedbackData[]>('/')
   }
 }
 

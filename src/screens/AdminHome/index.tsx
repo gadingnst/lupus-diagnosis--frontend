@@ -49,7 +49,10 @@ class AdminHome extends PureComponent<Props> {
       <View style={styles.historyCardContainer}>
         {history.map(data => (
           <View style={styles.historyCard} key={data.id}>
-            <Text style={styles.historyTitle}>Data Pengunjung</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={styles.historyTitle}>Data Pengunjung</Text>
+              <Text style={styles.historyTitle}>{data.id}.</Text>
+            </View>
             <Text>Umur: {data.visitor.umur}</Text>
             <Text>Jenis Kelamin: {data.visitor.jenis_kelamin}</Text>
             <Text>Pekerjaan: {data.visitor.pekerjaan}</Text>
