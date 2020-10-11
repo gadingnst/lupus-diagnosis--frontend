@@ -53,6 +53,15 @@ abstract class Http {
       body: JSON.stringify(requestBody)
     }).then((res) => this.responseHandler(res))
   }
+
+  protected delete<T>(
+    endpoint: string = '',
+    requestInit?: RequestInit
+  ): Promise<HttpResponse<T>> {
+    return fetch(this.BASE_URL + endpoint, requestInit).then((res) =>
+      this.responseHandler(res)
+    )
+  }
 }
 
 export default Http

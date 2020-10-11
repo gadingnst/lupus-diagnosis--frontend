@@ -77,16 +77,16 @@ class Result extends PureComponent<Props, State> {
           1. <Text style={styles.prediction}>Melakukan olahraga dengan rutin</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
         </Text>
         <Text style={styles.txt}>
-          2. <Text style={styles.prediction}>Berhenti merokok</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+          2. <Text style={styles.prediction}>Berhenti merokok</Text>. Kebiasaan merokok hanya akan membuat penyakit ini bertambah parah, karena dapat meningkatkan resiko penyakit jantung, serangan jantung, dan pneumonia.
         </Text>
         <Text style={styles.txt}>
-          3. <Text style={styles.prediction}>Istirahat yang cukup dan hindari stress</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+          3. <Text style={styles.prediction}>Istirahat yang cukup dan hindari stress</Text>. Stress hanya dapat membuat gejala lupus semakin parah. Maka dari itu, odapus harus banyak beristirahat dan menghindari stress.
         </Text>
         <Text style={styles.txt}>
-          4. <Text style={styles.prediction}>Pahami tubuh</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+          4. <Text style={styles.prediction}>Pahami tubuh</Text>. Para pasien dengan lupus harus tahu kapan gejala lupus muncul dan apa yang memicunya keluar. Misalnya saja, rasa letih muncul, maka odapus sebaiknya langsung beristirahat dengan cukup dan menghentikan segala kegiatannya terlebih dahulu.
         </Text>
         <Text style={styles.txt}>
-          5. <Text style={styles.prediction}>Hindari paparan sinar matahari</Text>. Odapus rentan mengalami gangguan pada sendi dan tulang. Tetap melakukan olahraga dengan rutin dapat membantu untuk menjaga kesehatan tulang dan sendi.
+          5. <Text style={styles.prediction}>Hindari paparan sinar matahari</Text>. Sinar matahari dapat memperburuk ruam kulit yang terjadi. Bila memang terpaksa untuk keluar disiang hari, sebaiknya gunakan tabir surya agar kulit terlindungi dari sinar matahari.
         </Text>
         <View style={[styles.btnContainer, { marginBottom: 50 }]}>
           <Button title="Selesai" color={Theme.success} onPress={this.done} />

@@ -33,6 +33,10 @@ class Case extends Http {
   public getHistory() {
     return this.get<HistoryData[]>('/history')
   }
+
+  public deleteHistory(id: number) {
+    return this.delete(`/history/${id}`, { method: 'DELETE' })
+  }
 }
 
 export default new Case()

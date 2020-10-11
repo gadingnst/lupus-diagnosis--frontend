@@ -29,6 +29,7 @@ export default StyleSheet.create({
     paddingHorizontal: 15
   },
   historyCard: {
+    marginVertical: 5,
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderWidth: 2,

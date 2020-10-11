@@ -1,8 +1,8 @@
-import { PureComponent } from 'react'
-import { View, Text, ScrollView, Image } from 'react-native'
+import { PureComponent, ReactNode } from 'react'
+import { View, Text, ScrollView, Image, Button, Alert } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { connect } from 'react-redux'
-import { Menu, ErrorWrapper } from 'components'
+import { Menu, ErrorWrapper, Loader } from 'components'
 import { RootStackParamsList } from 'navigator'
 import styles from './styles'
 import { AdminData } from 'api/Admin'
@@ -43,34 +43,58 @@ class AdminHome extends PureComponent<Props> {
     this.setState({ loading: true, error: '' }, this.componentDidMount)
   }
 
-  private renderHistory(): JSX.Element {
-    const { history } = this.state
-    return (
-      <View style={styles.historyCardContainer}>
-        {history.map(data => (
-          <View style={styles.historyCard} key={data.id}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={styles.historyTitle}>Data Pengunjung</Text>
-              <Text style={styles.historyTitle}>{data.id}.</Text>
-            </View>
-            <Text>Umur: {data.visitor.umur}</Text>
-            <Text>Jenis Kelamin: {data.visitor.jenis_kelamin}</Text>
-            <Text>Pekerjaan: {data.visitor.pekerjaan}</Text>
-            <View style={styles.border} />
-            <Text style={[styles.historyTitle, { textAlign: 'center', marginBottom: 10 }]}>{data.result.prediction.nama_penyakit}</Text>
-            <Text>Gejala: {data.indications.join(', ')}</Text>
-            <Text>Persentase: {data.result.prediction.percentage}%</Text>
-          </View>
-        ))}
-      </View>
+  private confirmDelete = (id: number) => () => {
+    Alert.alert(
+      'Hapus data',
+      'Apakah anda yakin akan menghapus data ini?',
+      [
+        { text: 'BATAL', onPress: () => false },
+        { text: 'YAKIN', onPress: () => this.deleteHistory(id) },
+      ]
     )
+  }
+
+  private deleteHistory = async (id: number) => {
+    this.setState({ loading: true })
+    try {
+      await Case.deleteHistory(id)
+      this.componentDidMount()
+    } catch (reason) {
+      const { message: error } = reason
+      this.setState({ error })
+    } finally {
+      this.setState({ loading: false })
+    }
+  }
+
+  private renderHistory(): ReactNode {
+    const { history } = this.state
+    return history.map(data => (
+      <View style={styles.historyCard} key={data.id}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.historyTitle}>Data Pengunjung</Text>
+          <Text style={styles.historyTitle}>{data.id}.</Text>
+        </View>
+        <Text>Umur: {data.visitor.umur}</Text>
+        <Text>Jenis Kelamin: {data.visitor.jenis_kelamin}</Text>
+        <Text>Pekerjaan: {data.visitor.pekerjaan}</Text>
+        <View style={styles.border} />
+        <Text style={[styles.historyTitle, { textAlign: 'center', marginBottom: 10 }]}>{data.result.prediction.nama_penyakit}</Text>
+        <Text>Gejala: {data.indications.join(', ')}</Text>
+        <Text>Persentase: {data.result.prediction.percentage}%</Text>
+        <View style={{ marginTop: 10 }}>
+          <Button title="Hapus" color={Theme.danger} onPress={this.confirmDelete(+(data.id || 0))} />
+        </View>
+      </View>
+    ))
   }
 
   public render(): JSX.Element {
     const { navigation, data } = this.props
-    const { error } = this.state
+    const { error, loading } = this.state
     return (
       <ScrollView>
+        <Loader visible={loading} />
         <View style={styles.container}>
           <Text style={styles.title}>Selamat Datang, {data.username}</Text>
           <Menu navigation={navigation} />
@@ -84,12 +108,14 @@ class AdminHome extends PureComponent<Props> {
         <Text style={{ textAlign: 'center', marginTop: 25, fontSize: 18, fontWeight: 'bold' }}>
           History Diagnosa
         </Text>
-        <ErrorWrapper
-          error={error}
-          fallbackTitle="Refresh"
-          fallbackFunc={this.refresh}
-          component={this.renderHistory()}
-        />
+        <View style={styles.historyCardContainer}>
+          <ErrorWrapper
+            error={error}
+            fallbackTitle="Refresh"
+            fallbackFunc={this.refresh}
+            component={this.renderHistory()}
+          />
+        </View>
       </ScrollView>
     )
   }

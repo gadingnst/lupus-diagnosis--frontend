@@ -1,12 +1,13 @@
-import { PureComponent } from 'react'
-import { View, Text, ScrollView, Image } from 'react-native'
+import { PureComponent, ReactNode } from 'react'
+import { View, Text, ScrollView, Image, Button, Alert } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { connect } from 'react-redux'
-import { Menu, ErrorWrapper } from 'components'
+import { Menu, ErrorWrapper, Loader } from 'components'
 import { RootStackParamsList } from 'navigator'
 import styles from './styles'
 import { AdminData } from 'api/Admin'
 import Feedback, { FeedbackData } from 'api/Feedback'
+import { Theme } from 'configs'
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminHome'> {
   data: AdminData
 }
@@ -41,31 +42,55 @@ class FeedbackList extends PureComponent<Props> {
     this.setState({ loading: true, error: '' }, this.componentDidMount)
   }
 
-  private renderHistory(): JSX.Element {
-    const { feedbacks } = this.state
-    return (
-      <View style={styles.historyCardContainer}>
-        {feedbacks.map(data => (
-          <View style={styles.historyCard} key={data.id}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={styles.historyTitle}>Kritik</Text>
-              <Text style={styles.historyTitle}>{data.id}.</Text>
-            </View>
-            <Text>{data.kritik}</Text>
-            <View style={styles.border} />
-            <Text style={styles.historyTitle}>Saran</Text>
-            <Text>{data.saran}</Text>
-          </View>
-        ))}
-      </View>
+  private confirmDelete = (id: number) => () => {
+    Alert.alert(
+      'Hapus data',
+      'Apakah anda yakin akan menghapus data ini?',
+      [
+        { text: 'BATAL', onPress: () => false },
+        { text: 'YAKIN', onPress: () => this.deleteFeedback(id) },
+      ]
     )
+  }
+
+  private deleteFeedback = async (id: number) => {
+    this.setState({ loading: true })
+    try {
+      await Feedback.deleteData(id)
+      this.componentDidMount()
+    } catch (reason) {
+      const { message: error } = reason
+      this.setState({ error })
+    } finally {
+      this.setState({ loading: false })
+    }
+  }
+
+  private renderFeedback(): ReactNode {
+    const { feedbacks } = this.state
+    return feedbacks.map(data => (
+      <View style={styles.historyCard} key={data.id}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.historyTitle}>Kritik</Text>
+          <Text style={styles.historyTitle}>{data.id}.</Text>
+        </View>
+        <Text>{data.kritik}</Text>
+        <View style={styles.border} />
+        <Text style={styles.historyTitle}>Saran</Text>
+        <Text>{data.saran}</Text>
+        <View style={{ marginTop: 10 }}>
+          <Button title="Hapus" color={Theme.danger} onPress={this.confirmDelete(+(data.id || 0))} />
+        </View>
+      </View>
+    ))
   }
 
   public render(): JSX.Element {
     const { navigation, data } = this.props
-    const { error } = this.state
+    const { error, loading } = this.state
     return (
       <ScrollView>
+        <Loader visible={loading} />
         <View style={styles.container}>
           <Text style={styles.title}>Selamat Datang, {data.username}</Text>
           <Menu navigation={navigation} />
@@ -73,12 +98,14 @@ class FeedbackList extends PureComponent<Props> {
         <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
           Kritik & Saran Pengunjung
         </Text>
-        <ErrorWrapper
-          error={error}
-          fallbackTitle="Refresh"
-          fallbackFunc={this.refresh}
-          component={this.renderHistory()}
-        />
+        <View style={styles.historyCardContainer}>
+          <ErrorWrapper
+            error={error}
+            fallbackTitle="Refresh"
+            fallbackFunc={this.refresh}
+            component={this.renderFeedback()}
+          />
+        </View>
       </ScrollView>
     )
   }

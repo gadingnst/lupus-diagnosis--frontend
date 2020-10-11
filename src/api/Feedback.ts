@@ -17,6 +17,10 @@ class Feedback extends Http {
   public getData() {
     return this.get<FeedbackData[]>('/')
   }
+
+  public deleteData(id: number) {
+    return this.delete(`/${id}`, { method: 'DELETE' })
+  }
 }
 
 export default new Feedback()
